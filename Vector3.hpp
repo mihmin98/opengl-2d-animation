@@ -1,3 +1,7 @@
+#ifndef _VECTOR3_HPP_
+#define _VECTOR3_HPP_
+
+#pragma once
 #include <string>
 
 class Vector3
@@ -20,3 +24,5 @@ public:
     friend Vector3 operator+(Vector3 lhs, const Vector3 &rhs);
     friend Vector3 operator-(Vector3 lhs, const Vector3 &rhs);
 };
+
+#endif
