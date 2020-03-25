@@ -11,7 +11,7 @@ public:
     float y;
     float z;
 
-    Vector3(float x, float y, float z);
+    Vector3(float x = 0, float y = 0, float z = 0);
     std::string ToString();
 
     static float DotProduct(const Vector3 &a, const Vector3 &b);
