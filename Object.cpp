@@ -6,8 +6,9 @@ Object::Object(Transform transform, int renderLayer)
     this->renderLayer = renderLayer;
 }
 
-void Object::drawObject()
+void Object::draw()
 {
+    glPushMatrix();
     // Translate object to its current position
     glTranslatef(this->transform.position.x,
                  this->transform.position.y,
@@ -20,4 +21,7 @@ void Object::drawObject()
     glScalef(this->transform.scale.x,
              this->transform.scale.y,
              this->transform.scale.z);
+
+    this->drawObject();
+    glPopMatrix();
 }

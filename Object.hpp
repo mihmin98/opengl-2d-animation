@@ -13,7 +13,8 @@ public:
 
     Object(Transform transform = Transform(), int renderLayer = 0);
 
-    void drawObject(); // When redefining function in child, always push and pop matrix
+    void draw();
+    virtual void drawObject() = 0; // Pure virtual function that says how the object is drawn (ex. shapes, etc)
 };
 
 #endif
