@@ -15,6 +15,7 @@ public:
 
     void draw();
     virtual void drawObject() = 0; // Pure virtual function that says how the object is drawn (ex. shapes, etc)
+    virtual void update(float deltaTime) = 0;
 };
 
 #endif
