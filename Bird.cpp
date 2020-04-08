@@ -1,4 +1,5 @@
 #include "Bird.hpp"
+#include <iostream>
 
 Bird::Bird()
 {
@@ -7,42 +8,44 @@ Bird::Bird()
     state = 0;
 
     // Idle state
-    stateDuration[0] = 10;
+    stateDuration[0] = 3;
     GetIdleTime();
-    wingStateAngle[0][0] = 5;
-    wingStateAngle[0][1] = -5;
+    wingStateAngle[0][0] = 10;
+    wingStateAngle[0][1] = -10;
 
     // Wings down
-    stateDuration[1] = 1;
-    wingStateAngle[1][0] = -5;
-    wingStateAngle[1][1] = 15;
+    stateDuration[1] = 0.3;
+    wingStateAngle[1][0] = -10;
+    wingStateAngle[1][1] = -25;
 
     // Wings flexed
-    stateDuration[2] = 1;
+    stateDuration[2] = 0.3;
     wingStateAngle[2][0] = 35;
     wingStateAngle[2][1] = -30;
 
     // Wings up
-    stateDuration[3] = 1;
+    stateDuration[3] = 0.3;
     wingStateAngle[3][0] = 20;
-    wingStateAngle[3][1] = 10;
+    wingStateAngle[3][1] = 15;
 
     // Return to Idle
-    stateDuration[4] = 1;
+    stateDuration[4] = 0.3;
     wingStateAngle[4][0] = 5;
     wingStateAngle[4][1] = -5;
 
     // Calculate the wing speed
     for (int i = 1; i < 5; i++)
     {
-        wingStateSpeed[i][0] = (wingStateAngle[i][0] - wingStateAngle[i][0]) / stateDuration[i];
-        wingStateSpeed[i][1] = (wingStateAngle[i][1] - wingStateAngle[i][1]) / stateDuration[i];
+        wingStateSpeed[i][0] = (wingStateAngle[i][0] - wingStateAngle[i - 1][0]) / stateDuration[i];
+        wingStateSpeed[i][1] = (wingStateAngle[i][1] - wingStateAngle[i - 1][1]) / stateDuration[i];
     }
 
-    bodySize = Vector3(50, 80);
-    wingLength = 300;
-    wingWidth = 45;
-    wingRadius = 18;
+    bodySize = Vector3(25, 40);
+    wingLength = 150;
+    wingWidth = 22.5;
+    wingRadius = 9;
+    wingAngle[0] = wingStateAngle[0][0];
+    wingAngle[1] = wingStateAngle[0][1];
     wingPosition[0] = Vector3(0, 0);
     wingPosition[1] = Vector3(wingPosition[0].x + wingLength * cos(wingAngle[0]) * DEG2RAD,
                               wingPosition[0].y + wingLength * sin(wingAngle[1]) * DEG2RAD);
@@ -68,7 +71,7 @@ void Bird::drawObject()
 
     // Right Wing 1
     glPushMatrix();
-    glTranslatef(wingPosition[0].x, wingPosition[0].y, wingPosition[0].z);
+    glTranslatef(wingPosition[1].x, wingPosition[1].y, wingPosition[1].z);
     glRotatef(wingAngle[1], 0, 0, 1);
     DrawRoundLine(Vector3(0, 0), Vector3(wingLength, 0), wingWidth, wingRadius);
     glPopMatrix();
@@ -84,7 +87,7 @@ void Bird::drawObject()
 
     // Left Wing 1
     glPushMatrix();
-    glTranslatef(-wingPosition[0].x, wingPosition[0].y, wingPosition[0].z);
+    glTranslatef(-wingPosition[1].x, wingPosition[1].y, wingPosition[1].z);
     glRotatef(180 - wingAngle[1], 0, 0, 1);
     DrawRoundLine(Vector3(0, 0), Vector3(wingLength, 0), wingWidth, wingRadius);
     glPopMatrix();
@@ -115,15 +118,15 @@ void Bird::update(float deltaTime)
         wingAngle[0] += wingStateSpeed[state][0] * deltaTime;
         wingAngle[1] += wingStateSpeed[state][1] * deltaTime;
 
-        if (wingDirection[0] * wingAngle[0] >= wingStateAngle[state][0] ||
-            wingDirection[1] * wingAngle[1] >= wingStateAngle[state][1])
+        if (wingDirection[0] * wingAngle[0] >= wingStateAngle[state][0] * wingDirection[0] ||
+            wingDirection[1] * wingAngle[1] >= wingStateAngle[state][1] * wingDirection[1])
         {
             state = (state + 1) % 5;
         }
     }
 
-    wingPosition[1] = Vector3(wingPosition[0].x + wingLength * cos(wingAngle[0]) * DEG2RAD,
-                              wingPosition[0].y + wingLength * sin(wingAngle[1]) * DEG2RAD);
+    wingPosition[1] = Vector3(wingPosition[0].x + wingLength * cos(wingAngle[0] * DEG2RAD),
+                              wingPosition[0].y + wingLength * sin(wingAngle[0] * DEG2RAD));
 
     // TODO: Maybe add rotation when the bird moves left or right
 
@@ -150,7 +153,7 @@ void Bird::DrawRoundLine(Vector3 p1, Vector3 p2, float width, float radius)
 
     // Draw the 2 rectangles
     glBegin(GL_QUADS);
-    
+
     // Horizontal rect
     glVertex2f(left.x, left.y - width / 2 + radius);   // Bottom Left
     glVertex2f(right.x, right.y - width / 2 + radius); // Bottom Right
