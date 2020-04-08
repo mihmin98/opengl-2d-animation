@@ -18,7 +18,7 @@ void Polygon::drawObject()
     for (unsigned long i = 0; i < vertex.size(); i++)
     {
         glColor3f(color[i].x, color[i].y, color[i].z);
-        glVertex3f(vertex[i].x, vertex[i].y, vertex[i].z);
+        glVertex2f(vertex[i].x, vertex[i].y);
     }
     glEnd();
 }
