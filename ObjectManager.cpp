@@ -1,5 +1,7 @@
 #include "ObjectManager.hpp"
 
+ObjectManager *ObjectManager::instance = nullptr;
+
 ObjectManager::ObjectManager()
 {
     objects = std::vector<Object *>();
