@@ -1,6 +1,10 @@
 #ifndef _OBJECT_HPP_
 #define _OBJECT_HPP_
 
+#ifndef DEG2RAD
+#define DEG2RAD 3.14159 / 180.0
+#endif
+
 #pragma once
 #include "Transform.hpp"
 #include "GL/freeglut.h"

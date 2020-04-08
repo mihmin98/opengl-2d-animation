@@ -1,8 +1,6 @@
 #ifndef _BIRD_HPP_
 #define _BIRD_HPP_
 
-#define DEG2RAD 3.14159 / 180.0
-
 #pragma once
 #include "Object.hpp"
 #include <cstdlib>
