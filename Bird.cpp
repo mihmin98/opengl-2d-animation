@@ -125,8 +125,8 @@ void Bird::update(float deltaTime)
         }
     }
 
-    wingPosition[1] = Vector3(wingPosition[0].x + wingLength * cos(wingAngle[0] * DEG2RAD),
-                              wingPosition[0].y + wingLength * sin(wingAngle[0] * DEG2RAD));
+    wingPosition[1] = Vector3(wingPosition[0].x + (wingLength - wingRadius) * cos(wingAngle[0] * DEG2RAD),
+                              wingPosition[0].y + (wingLength - wingRadius) * sin(wingAngle[0] * DEG2RAD));
 
     // TODO: Maybe add rotation when the bird moves left or right
 
