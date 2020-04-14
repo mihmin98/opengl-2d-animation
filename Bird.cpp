@@ -10,7 +10,7 @@ Bird::Bird()
     // Idle state
     stateDuration[0] = 3;
     GetIdleTime();
-    wingStateAngle[0][0] = 10;
+    wingStateAngle[0][0] = 5;
     wingStateAngle[0][1] = -10;
 
     // Wings down
@@ -31,7 +31,7 @@ Bird::Bird()
     // Return to Idle
     stateDuration[4] = 0.3;
     wingStateAngle[4][0] = 5;
-    wingStateAngle[4][1] = -5;
+    wingStateAngle[4][1] = -10;
 
     // Calculate the wing speed
     for (int i = 1; i < 5; i++)
