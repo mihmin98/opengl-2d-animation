@@ -1,7 +1,7 @@
 #include "Bird.hpp"
 #include <iostream>
 
-Bird::Bird()
+Bird::Bird(Transform transform, int renderLayer) : Object(transform, renderLayer)
 {
     velocity = Vector3(0, 0);
 

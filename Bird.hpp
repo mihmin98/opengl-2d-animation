@@ -11,7 +11,7 @@
 class Bird : public Object
 {
 public:
-    Bird();
+    Bird(Transform transform = Transform(), int renderLayer = 0);
 
     void drawObject() override;
     void update(float deltaTime) override;
