@@ -21,6 +21,7 @@ public:
     Vector3 &operator-=(const Vector3 &rhs);
 
     friend bool operator==(const Vector3 &a, const Vector3 &b);
+    friend bool operator!=(const Vector3 &a, const Vector3 &b);
     friend Vector3 operator+(Vector3 lhs, const Vector3 &rhs);
     friend Vector3 operator-(Vector3 lhs, const Vector3 &rhs);
 };
