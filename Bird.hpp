@@ -19,6 +19,9 @@ public:
     void DrawRoundLine(Vector3 p1, Vector3 p2, float width, float radius);
     void GetIdleTime(); // Sets idleTime to a random value between o and stateDuration[0]
 
+    Vector3 getVelocity();
+    void setVelocity(Vector3 velocity);
+
 protected:
     Vector3 velocity;       // Object velocity
     int state;              // Animation state

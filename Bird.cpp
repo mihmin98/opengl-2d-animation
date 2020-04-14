@@ -225,3 +225,13 @@ void Bird::GetIdleTime()
     // Map the value from [0, RAND_MAX] to [0, stateDuration[0]]
     idleTime = randomValue * stateDuration[0] / RAND_MAX;
 }
+
+Vector3 Bird::getVelocity()
+{
+    return velocity;
+}
+
+void Bird::setVelocity(Vector3 velocity)
+{
+    this->velocity = velocity;
+}
