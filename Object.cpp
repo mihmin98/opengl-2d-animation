@@ -15,12 +15,14 @@ void Object::draw()
                  this->transform.position.z);
 
     // Rotate object
-    glRotatef(this->transform.rotation, 0, 0, 1);
+    if (this->transform.rotation != 0)
+        glRotatef(this->transform.rotation, 0, 0, 1);
 
     // Scale object
-    glScalef(this->transform.scale.x,
-             this->transform.scale.y,
-             this->transform.scale.z);
+    if (this->transform.scale != Vector3(1, 1, 1))
+        glScalef(this->transform.scale.x,
+                 this->transform.scale.y,
+                 this->transform.scale.z);
 
     this->drawObject();
     glPopMatrix();
