@@ -218,7 +218,8 @@ void Bird::DrawRoundLine(Vector3 p1, Vector3 p2, float width, float radius)
 
 void Bird::GetIdleTime()
 {
-    srand(time(NULL));
+    //srand(time(NULL) * transform.position.x * transform.position.y);
+    srand(time(NULL) ^ reinterpret_cast<intptr_t>(this));
     int randomValue = rand();
 
     // Map the value from [0, RAND_MAX] to [0, stateDuration[0]]
