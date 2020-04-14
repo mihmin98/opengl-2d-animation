@@ -49,6 +49,9 @@ Bird::Bird(Transform transform, int renderLayer) : Object(transform, renderLayer
     wingPosition[0] = Vector3(0, 0);
     wingPosition[1] = Vector3(wingPosition[0].x + wingLength * cos(wingAngle[0]) * DEG2RAD,
                               wingPosition[0].y + wingLength * sin(wingAngle[1]) * DEG2RAD);
+
+    rotationSpeed = 20;
+    maxRotation = 20;
 }
 
 void Bird::drawObject()
@@ -128,7 +131,29 @@ void Bird::update(float deltaTime)
     wingPosition[1] = Vector3(wingPosition[0].x + (wingLength - wingRadius) * cos(wingAngle[0] * DEG2RAD),
                               wingPosition[0].y + (wingLength - wingRadius) * sin(wingAngle[0] * DEG2RAD));
 
-    // TODO: Maybe add rotation when the bird moves left or right
+    // If the bird is moving horizontally
+    if (velocity.x > FLT_MIN || velocity.x < -FLT_EPSILON)
+    {
+        int rotationSign = velocity.x > 0 ? 1 : -1;
+        float deltaRotation = rotationSign * rotationSpeed * deltaTime;
+        if (transform.rotation + deltaRotation < -maxRotation || transform.rotation + deltaRotation > maxRotation)
+            transform.rotation = rotationSign * maxRotation;
+        else
+            transform.rotation += deltaRotation;
+    }
+    else
+    {
+        // If the bird is not moving horizontally but it's still rotated
+        if (transform.rotation > FLT_EPSILON || transform.rotation < -FLT_EPSILON)
+        {
+            int rotationSign = transform.rotation > 0 ? 1 : -1;
+            float deltaRotation = -rotationSign * rotationSpeed * deltaTime;
+            if (fabs(transform.rotation) - fabs(deltaRotation) <= 0)
+                transform.rotation = 0;
+            else
+                transform.rotation += deltaRotation;
+        }
+    }
 
     // TODO: Maybe add velocity updates and stuff like that
 }

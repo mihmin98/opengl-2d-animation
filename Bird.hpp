@@ -5,6 +5,7 @@
 #include "Object.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <cfloat>
 #include <cmath>
 #include <algorithm>
 
@@ -35,6 +36,8 @@ protected:
     float wingRadius;
     Vector3 wingPosition[2]; // Position of the wing segments
     float wingAngle[2];      // Wing segments angle
+    float rotationSpeed;
+    float maxRotation;
 };
 
 #endif
