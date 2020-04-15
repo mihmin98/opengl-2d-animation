@@ -2,33 +2,24 @@ CC=g++
 CFLAGS=-Wall
 LIBS=-lglut -lGL -lGLU
 
-all: main Vector3 Transform Object ObjectManager Polygon Sun Bird
-	$(CC) -o animation.out main.o Vector3.o Transform.o Object.o ObjectManager.o \
-							Polygon.o Sun.o Bird.o $(LIBS) $(CFLAGS)
+APPNAME=animation
+OBJS=Vector3.o \
+	 Transform.o \
+	 Object.o \
+	 ObjectManager.o \
+	 Polygon.o \
+	 Sun.o \
+	 Bird.o \
+	 main.o
 
-main: main.cpp
-	$(CC) -c main.cpp -o main.o $(LIBS) $(CFLAGS)
+all: $(APPNAME)
 
-Vector3: Vector3.cpp Vector3.hpp
-	$(CC) -c Vector3.cpp -o Vector3.o $(LIBS) $(CFLAGS)
+$(APPNAME): $(OBJS)
+	$(CC) -o $(APPNAME) $(OBJS) $(LIBS) $(CFLAGS)
 
-Transform: Transform.cpp Transform.hpp
-	$(CC) -c Transform.cpp -o Transform.o $(LIBS) $(CFLAGS)
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-Object: Object.cpp Object.hpp
-	$(CC) -c Object.cpp -o Object.o $(LIBS) $(CFLAGS)
-
-ObjectManager: ObjectManager.cpp ObjectManager.hpp
-	$(CC) -c ObjectManager.cpp -o ObjectManager.o $(LIBS) $(CFLAGS)
-
-Polygon: Polygon.cpp Polygon.hpp
-	$(CC) -c Polygon.cpp -o Polygon.o $(LIBS) $(CFLAGS)
-
-Sun: Sun.cpp Sun.hpp
-	$(CC) -c Sun.cpp -o Sun.o $(LIBS) $(CFLAGS)
-
-Bird: Bird.cpp Bird.hpp
-	$(CC) -c Bird.cpp -o Bird.o $(LIBS) $(CFLAGS)
-
+.PHONY: clean
 clean:
-	rm animation.out main.o Vector3.o Transform.o Object.o ObjectManager.o Polygon.o Sun.o Bird.o
+	rm $(APPNAME) $(OBJS)
