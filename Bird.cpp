@@ -4,6 +4,7 @@
 Bird::Bird(Transform transform, int renderLayer) : Object(transform, renderLayer)
 {
     velocity = Vector3(0, 0);
+    previousPosition = transform.position;
 
     state = 0;
 
@@ -131,6 +132,10 @@ void Bird::update(float deltaTime)
     wingPosition[1] = Vector3(wingPosition[0].x + (wingLength - wingRadius) * cos(wingAngle[0] * DEG2RAD),
                               wingPosition[0].y + (wingLength - wingRadius) * sin(wingAngle[0] * DEG2RAD));
 
+    // If the bird has not moved since the last frame, set velocity to 0
+    if (previousPosition == transform.position)
+        velocity = Vector3(0, 0);
+
     // If the bird is moving horizontally
     if (velocity.x > FLT_MIN || velocity.x < -FLT_EPSILON)
     {
@@ -147,7 +152,7 @@ void Bird::update(float deltaTime)
         if (transform.rotation > FLT_EPSILON || transform.rotation < -FLT_EPSILON)
         {
             int rotationSign = transform.rotation > 0 ? 1 : -1;
-            float deltaRotation = -rotationSign * rotationSpeed * deltaTime;
+            float deltaRotation = -rotationSign * rotationSpeed / 1.5 * deltaTime;
             if (fabs(transform.rotation) - fabs(deltaRotation) <= 0)
                 transform.rotation = 0;
             else
@@ -155,6 +160,7 @@ void Bird::update(float deltaTime)
         }
     }
 
+    previousPosition = transform.position;
     // TODO: Maybe add velocity updates and stuff like that
 }
 

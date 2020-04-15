@@ -38,6 +38,8 @@ protected:
     float wingAngle[2];      // Wing segments angle
     float rotationSpeed;
     float maxRotation;
+
+    Vector3 previousPosition;
 };
 
 #endif
